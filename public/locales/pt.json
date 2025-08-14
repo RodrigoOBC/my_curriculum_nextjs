@@ -1,0 +1,48 @@
+{
+  "header": {
+    "name": "Rodrigo Cabral",
+    "about": "Sobre Mim",
+    "education": "Formação",
+    "educationSkills": "Formação e Skills",
+    "experience": "Experiência",
+    "articles": "Artigos",
+    "repositories": "Repositórios",
+    "language": "Idioma",
+    "linkedin": "LinkedIn",
+    "medium": "Medium",
+    "github": "GitHub"
+  },
+  "aboutMe": {
+    "title": "Um pouco sobre mim",
+    "description": [
+      "Olá, eu sou um Líder Técnico de Teste e Qualidade de Software e atuo na área desde 2019. Meu foco é em automatização e eu tenho habilidades sólidas em áreas como cenários de teste, execução de teste, testes funcionais e teste automatizado.",
+      "Sou especialista em ferramentas de teste como Playwright, Cypress e Selenium. Como profissional, sou responsável por desenvolver e implementar roteiros de teste abrangentes que cubram todas as funcionalidades e aspectos do software. Sou habilidoso em planejar e executar testes funcionais e automatizados de forma bem-sucedida, garantindo que todos os cenários de teste sejam cobertos.",
+      "Sou altamente experiente em homologação, o que me ajuda a garantir que todos os requisitos de negócios e do cliente sejam cumpridos antes de lançar o software para o público. Como Tech lead de QA, eu sou altamente valorizado por minha capacidade de gerenciar projetos complexos de teste com eficiência e precisão."
+    ]
+  },
+  "pageTitle": {
+    "education": "Formação e Skills",
+    "experience": "Experiência",
+    "articles": "Artigos",
+    "repositories": "Repositórios"
+  },
+  "education": {
+    "title": "Formação",
+    "description": "Graduação em Ciência da Computação pela Universidade XYZ."
+  },
+  "skills": {
+    "title": "Habilidades"
+  },
+  "experience": {
+    "title": "Experiência",
+    "description": "5 anos de experiência em desenvolvimento web, focado em React, Node.js e MongoDB."
+  },
+  "articles": {
+    "title": "Artigos",
+    "description": "Veja meus artigos publicados sobre tecnologia e desenvolvimento."
+  },
+  "repositories": {
+    "title": "Repositórios",
+    "description": "Projetos open source disponíveis no meu GitHub."
+  }
+}

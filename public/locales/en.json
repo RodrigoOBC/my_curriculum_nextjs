@@ -1,0 +1,44 @@
+{
+  "header": {
+    "name": "Rodrigo Cabral",
+    "about": "About Me",
+    "education": "Education",
+    "educationSkills": "Education & Skills",
+    "experience": "Experience",
+    "articles": "Articles",
+    "repositories": "Repositories",
+    "language": "Language",
+    "linkedin": "LinkedIn",
+    "medium": "Medium",
+    "github": "GitHub"
+  },
+  "pageTitle": {
+    "education": "Education & Skills",
+    "experience": "Experience",
+    "articles": "Articles",
+    "repositories": "Repositories"
+  },
+  "aboutMe": {
+    "title": "About Me",
+    "description": "I am a fullstack developer passionate about technology, innovation, and continuous learning."
+  },
+  "education": {
+    "title": "Education",
+    "description": "Bachelor's degree in Computer Science from XYZ University."
+  },
+  "skills": {
+    "title": "Skills"
+  },
+  "experience": {
+    "title": "Experience",
+    "description": "5 years of experience in web development, focused on React, Node.js, and MongoDB."
+  },
+  "articles": {
+    "title": "Articles",
+    "description": "Check out my published articles on technology and development."
+  },
+  "repositories": {
+    "title": "Repositories",
+    "description": "Open source projects available on my GitHub."
+  }
+}
