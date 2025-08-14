@@ -6,10 +6,6 @@ import Typography from '@mui/material/Typography';
 import Header from '../components/layout/Header';
 
 const AboutMe = dynamic(() => import('../components/sections/AboutMe'));
-const Education = dynamic(() => import('../components/sections/Education'));
-const Experience = dynamic(() => import('../components/sections/Experience'));
-const Articles = dynamic(() => import('../components/sections/Articles'));
-const Repositories = dynamic(() => import('../components/sections/Repositories'));
 
 function useTranslations(language) {
   const [t, setT] = React.useState(null);
@@ -25,31 +21,9 @@ function useTranslations(language) {
 
 export default function Home() {
   const [language, setLanguage] = React.useState('pt');
-  const [section, setSection] = React.useState('aboutMe');
-   const t = useTranslations(language);
+  const t = useTranslations(language);
 
-   if (!t) return <div>Carregando...</div>;
-
-   const handleNavigate = (sectionId) => {
-     setSection(sectionId);
-   };
-
-  const renderSection = () => {
-    switch (section) {
-      case 'aboutMe':
-        return <AboutMe t={t} />;
-      case 'education':
-        return <Education t={t} />;
-      case 'experience':
-        return <Experience t={t} />;
-      case 'articles':
-        return <Articles t={t} />;
-      case 'repositories':
-        return <Repositories t={t} />;
-      default:
-        return null;
-    }
-  };
+  if (!t) return <div>Carregando...</div>;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -57,7 +31,7 @@ export default function Home() {
         t={t}
         language={language}
         setLanguage={setLanguage}
-        onNavigate={handleNavigate}
+        onNavigate={() => {}}
       />
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', justifyContent: 'center', mt: 8, gap: 4 }}>
         <Avatar
@@ -69,8 +43,8 @@ export default function Home() {
           <Typography variant="h4" gutterBottom>
             {t.header.name}
           </Typography>
-          {/* Renderiza a seção selecionada */}
-          {renderSection()}
+          {/* Renderiza apenas o AboutMe na home */}
+          <AboutMe t={t} />
         </Box>
       </Box>
     </Box>
