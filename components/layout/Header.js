@@ -9,6 +9,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArticleIcon from '@mui/icons-material/Article';
+import Link from 'next/link';
 
 const socialLinks = [
   { icon: <LinkedInIcon />, url: 'https://www.linkedin.com/in/rodrigo-cabral', label: 'LinkedIn' },
@@ -76,8 +77,8 @@ export default function Header({ t, language, setLanguage, onNavigate }) {
           {t.header.name}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button color="inherit" onClick={() => onNavigate('aboutMe')}>{t.header.about}</Button>
-          <Button color="inherit" onClick={() => onNavigate('education')}>{t.header.education}</Button>
+          <Button color="inherit" component={Link} href="/">{t.header.about}</Button>
+           <Button color="inherit" component={Link} href="/education">{t.header.education}</Button>
           <Button color="inherit" onClick={() => onNavigate('experience')}>{t.header.experience}</Button>
           <Button color="inherit" onClick={() => onNavigate('articles')}>{t.header.articles}</Button>
           <Button color="inherit" onClick={() => onNavigate('repositories')}>{t.header.repositories}</Button>
