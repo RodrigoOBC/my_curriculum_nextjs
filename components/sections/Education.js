@@ -7,12 +7,8 @@ import EducationCard from '../molecules/EducationCard';
 export default function Education({ t, educationList = [] }) {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" width="100%" sx={{ gap: 3, px: 2 }}>
-      <Typography variant="h5" sx={{ mt: 2 }}>
-        {t.education.title}
-      </Typography>
-      <Typography variant="body1" sx={{ mt: 1, mb: 3 }}>
-        {t.education.description}
-      </Typography>
+
+
      {educationList.length === 0 ? (
          <Typography variant="body2" color="text.secondary">Nenhuma formação encontrada.</Typography>
        ) : (
