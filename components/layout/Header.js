@@ -81,7 +81,7 @@ export default function Header({ t, language, setLanguage, onNavigate }) {
            <Button color="inherit" component={Link} href="/education">{t.header.education}</Button>
           <Button color="inherit" component={Link} href="/experiences">{t.header.experience}</Button>
           <Button color="inherit" component={Link} href="/articles">{t.header.articles}</Button>
-          <Button color="inherit" onClick={() => onNavigate('repositories')}>{t.header.repositories}</Button>
+          <Button color="inherit" component={Link} href="/repositories">{t.header.repositories}</Button>
         </Box>
         <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
           {socialLinks.map((link) => (
