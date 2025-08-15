@@ -46,5 +46,9 @@
     "description": "Projetos open source disponíveis no meu GitHub."
   },
   "softSkills": "Skills",
-  "hardSkills": "Professional Skills"
+  "hardSkills": "Professional Skills",
+  "buttons": {
+    "downloadCV": "Baixar CV",
+    "readAllArticles": "Ler todos os artigos"
+  }
 }
