@@ -44,5 +44,7 @@
   "repositories": {
     "title": "Repositórios",
     "description": "Projetos open source disponíveis no meu GitHub."
-  }
+  },
+  "softSkills": "Skills",
+  "hardSkills": "Professional Skills"
 }
