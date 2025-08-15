@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 
 /**
  * Componente para exibir informações de uma experiência profissional.
+ * ATENÇÃO: Nunca use dangerouslySetInnerHTML para renderizar dados vindos do banco sem sanitização! Isso pode causar XSS.
  * Props:
  * - cargo: nome do cargo
  * - startYear: ano de início

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { z } from 'zod';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -10,6 +11,8 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 
+// ATENÇÃO: Nunca mova o acesso a process.env.MONGODB_URI ou process.env.MONGODB_DB para fora de getStaticProps, getServerSideProps ou getStaticPaths.
+// Variáveis de ambiente sensíveis só devem ser acessadas no lado do servidor!
 export async function getStaticProps() {
   const host = process.env.MONGODB_URI;
   const dbName = process.env.MONGODB_DB;
@@ -20,7 +23,30 @@ export async function getStaticProps() {
     skillsList = await mongo.findAll('Skills');
     experiencesList = await mongo.findAll('Experiencia');
     await mongo.closeConnection();
+
+    // Validação dos dados vindos do banco
+    const skillSchema = z.array(z.object({ Softskills: z.array(z.string()) }));
+    const experienceSchema = z.array(z.object({
+      position: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+      company: z.string(),
+      state: z.string(),
+      descriptions: z.union([z.string(), z.array(z.string())]),
+      lang: z.string()
+    }));
+    const skillParse = skillSchema.safeParse(skillsList);
+    const experienceParse = experienceSchema.safeParse(experiencesList);
+    if (!skillParse.success) {
+      console.error('Skill data validation failed:', skillParse.error);
+      skillsList = [];
+    }
+    if (!experienceParse.success) {
+      console.error('Experience data validation failed:', experienceParse.error);
+      experiencesList = [];
+    }
   } catch (err) {
+    console.error("Failed to fetch data from MongoDB:", err); // Log do erro para depuração
     skillsList = [];
     experiencesList = [];
   }
