@@ -10,11 +10,12 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
+import Tooltip from '@mui/material/Tooltip';
 
 const socialLinks = [
-  { icon: <LinkedInIcon />, url: 'https://www.linkedin.com/in/rodrigo-cabral', label: 'LinkedIn' },
-  { icon: <ArticleIcon />, url: 'https://medium.com/@rodrigo_cabral', label: 'Medium' },
-  { icon: <GitHubIcon />, url: 'https://github.com/rodrigo-cabral', label: 'GitHub' },
+  { icon: <LinkedInIcon />, url: 'https://www.linkedin.com/in/rodrigo-cabral-0280b3121/', label: 'LinkedIn' },
+  { icon: <GitHubIcon />, url: 'https://github.com/RodrigoOBC', label: 'GitHub' },
+  { icon: <ArticleIcon />, url: 'https://medium.com/@rodrigo.oliveiracabral', label: 'Medium' },
 ];
 
 import Menu from '@mui/material/Menu';
@@ -69,6 +70,7 @@ function LanguageMenu({ language, setLanguage }) {
   );
 }
 
+
 export default function Header({ t, language, setLanguage, onNavigate }) {
   return (
     <AppBar position="static" color="primary">
@@ -78,17 +80,19 @@ export default function Header({ t, language, setLanguage, onNavigate }) {
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button color="inherit" component={Link} href="/">{t.header.about}</Button>
-           <Button color="inherit" component={Link} href="/education">{t.header.education}</Button>
+          <Button color="inherit" component={Link} href="/education">{t.header.education}</Button>
           <Button color="inherit" component={Link} href="/experiences">{t.header.experience}</Button>
           <Button color="inherit" component={Link} href="/articles">{t.header.articles}</Button>
           <Button color="inherit" component={Link} href="/repositories">{t.header.repositories}</Button>
         </Box>
         <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
-          {socialLinks.map((link) => (
-            <IconButton key={link.label} color="inherit" href={link.url} target="_blank" rel="noopener" aria-label={link.label}>
-              {link.icon}
-            </IconButton>
-          ))}
+{socialLinks.map((link) => (
+             <Tooltip title={link.label} arrow key={link.label}>
+               <IconButton color="inherit" href={link.url} target="_blank" rel="noopener" aria-label={link.label}>
+                 {link.icon}
+               </IconButton>
+             </Tooltip>
+           ))}
         </Box>
         {/* Menu de seleção de idioma */}
         <LanguageMenu language={language} setLanguage={setLanguage} />
