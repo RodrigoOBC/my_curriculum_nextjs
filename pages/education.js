@@ -31,16 +31,10 @@ export async function getStaticProps() {
         endDate: z.string().optional(),
         descriptions: z.union([z.string(), z.array(z.string())]).optional()
       }));
-      const skillSchema = z.array(z.object({ HadSkills: z.array(z.string()) }));
       const educationParse = educationSchema.safeParse(educationList);
-      const skillParse = skillSchema.safeParse(skillsList);
       if (!educationParse.success) {
         console.error('Education data validation failed:', educationParse.error);
         educationList = [];
-      }
-      if (!skillParse.success) {
-        console.error('Skill data validation failed:', skillParse.error);
-        skillsList = [];
       }
     } catch (err) {
       console.error("Failed to fetch data from MongoDB:", err); // Log do erro para depuração
