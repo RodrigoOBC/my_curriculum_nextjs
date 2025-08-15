@@ -43,5 +43,9 @@
   },
   
   "softSkills": "Skills",
-  "hardSkills": "Professional Skills"
+  "hardSkills": "Professional Skills",
+  "buttons": {
+    "downloadCV": "Download CV",
+    "readAllArticles": "Read All Articles"
+  }
 }
