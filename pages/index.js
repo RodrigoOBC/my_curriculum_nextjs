@@ -35,8 +35,8 @@ function StickyAvatar({ name }) {
     >
       <Avatar
         alt={name}
-        src="/profile.jpg"
-        sx={{ width: 180, height: 180, border: '4px solid #1976d2' }}
+        src="/images/perfil.jpeg"
+        sx={{ width: 240, height: 240, border: '4px solid #1976d2' }}
       />
     </Box>
   );
