@@ -16,16 +16,7 @@ export default function AboutMe({ t }) {
         mt: 4,
       }}
     >
-      <Avatar
-        alt={t.header.name}
-        src="/profile.jpg"
-        sx={{
-          width: 180,
-          height: 180,
-          border: '4px solid #1976d2',
-          mb: 2,
-        }}
-      />
+      
       <Typography variant="h5" sx={{ mb: 2 }}>
         {t.aboutMe.title}
       </Typography>
