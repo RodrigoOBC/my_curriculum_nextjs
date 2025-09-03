@@ -72,13 +72,23 @@ function useTranslations(language) {
 
 
 export default function ExperiencesPage({ experiencesList, skillsList }) {
-  const [language, setLanguage] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const browserLang = navigator.language.slice(0, 2);
-      return ['pt', 'en'].includes(browserLang) ? browserLang : 'pt';
-    }
-    return 'pt';
-  });
+const [language, setLanguage] = useState(() => {
+     if (typeof window !== 'undefined') {
+       const cachedLang = window.sessionStorage.getItem('language');
+       if (cachedLang && ['pt', 'en'].includes(cachedLang)) {
+         return cachedLang;
+       }
+       const browserLang = navigator.language.slice(0, 2);
+       return ['pt', 'en'].includes(browserLang) ? browserLang : 'pt';
+     }
+     return 'pt';
+   });
+
+   useEffect(() => {
+     if (typeof window !== 'undefined') {
+       window.sessionStorage.setItem('language', language);
+     }
+   }, [language]);
   const t = useTranslations(language);
 
   if (!t) return <div>Carregando...</div>;
