@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-
+import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 
@@ -16,16 +16,7 @@ export default function AboutMe({ t }) {
         mt: 4,
       }}
     >
-      <Avatar
-        alt={t.header.name}
-        src="/profile.jpg"
-        sx={{
-          width: 180,
-          height: 180,
-          border: '4px solid #1976d2',
-          mb: 2,
-        }}
-      />
+      
       <Typography variant="h5" sx={{ mb: 2 }}>
         {t.aboutMe.title}
       </Typography>
@@ -59,6 +50,23 @@ export default function AboutMe({ t }) {
               {t.aboutMe.description}
             </Typography>
           )}
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          flexWrap: 'wrap',
+          justifyContent: 'flex-start',
+          maxWidth: 600,
+          mt: 1,
+          ml: 'auto',
+          mr: 'auto',
+        }}
+      >
+        <Chip label="Tag 1" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+        <Chip label="Tag 2" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+        <Chip label="Tag 3" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+        <Chip label="Tag 4" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+      </Box>
     </Box>
   );
 }
