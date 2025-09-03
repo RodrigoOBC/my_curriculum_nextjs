@@ -62,10 +62,16 @@ export default function AboutMe({ t }) {
           mr: 'auto',
         }}
       >
-        <Chip label="Tag 1" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 2" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 3" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 4" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+
+        {Array.isArray(t.aboutMe.firstSkills)
+        ? t.aboutMe.firstSkills.map((skills) => (
+           
+              <Chip label={skills} color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+
+          )): null
+}
+
+
       </Box>
     </Box>
   );
