@@ -6,13 +6,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Chip from '@mui/material/Chip';
 
-/**
- * Componente para exibir informações de um repositório.
- * Props:
- * - name: nome do repositório
- * - description: descrição do repositório
- * - tags: array de tags
- */
+
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 const RepositoryCard = ({ name, description, tags, link, aggregator }) => (
@@ -41,7 +35,6 @@ const RepositoryCard = ({ name, description, tags, link, aggregator }) => (
         justifyContent: 'space-between',
       }}
     >
-      {/* Seção superior: nome do repositório */}
        <Box sx={{ display: 'flex', alignItems: 'center', p: 2, pb: 1 }}>
          {aggregator === 'github' && (
            <GitHubIcon sx={{ color: 'primary.main', mr: 1 }} />
@@ -51,7 +44,6 @@ const RepositoryCard = ({ name, description, tags, link, aggregator }) => (
          </Typography>
        </Box>
       <Divider />
-      {/* Seção inferior: descrição + tags */}
       <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', py: 1 }}>
         <Typography variant="body2" color="text.primary" paragraph sx={{ mb: 1, wordBreak: 'break-word', overflowWrap: 'break-word' }}>
           {description}

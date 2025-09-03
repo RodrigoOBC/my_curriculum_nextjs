@@ -11,8 +11,8 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 
-// ATENÇÃO: Nunca mova o acesso a process.env.MONGODB_URI ou process.env.MONGODB_DB para fora de getStaticProps, getServerSideProps ou getStaticPaths.
-// Variáveis de ambiente sensíveis só devem ser acessadas no lado do servidor!
+
+
 export async function getStaticProps() {
   const host = process.env.MONGODB_URI;
   const dbName = process.env.MONGODB_DB;
@@ -24,7 +24,7 @@ export async function getStaticProps() {
     experiencesList = await mongo.findAll('Experiencia');
     await mongo.closeConnection();
 
-    // Validação dos dados vindos do banco
+
     const skillSchema = z.array(z.object({ Softskills: z.array(z.string()) }));
     const experienceSchema = z.array(z.object({
       position: z.string(),
@@ -46,7 +46,7 @@ export async function getStaticProps() {
       experiencesList = [];
     }
   } catch (err) {
-    console.error("Failed to fetch data from MongoDB:", err); // Log do erro para depuração
+    console.error("Failed to fetch data from MongoDB:", err);
     skillsList = [];
     experiencesList = [];
   }
@@ -93,7 +93,7 @@ const [language, setLanguage] = useState(() => {
 
   if (!t) return <div>Carregando...</div>;
 
-  // Filtra a lista de experiências e skills pelo idioma selecionado
+
   const languageExperiences = language === 'pt' ? 'pt/Br' : 'en/Us';
   const filteredExperiencesList = experiencesList.filter(exp => exp.lang === languageExperiences);
   const softSkillsList = skillsList[0]['Softskills']
@@ -142,7 +142,6 @@ const [language, setLanguage] = useState(() => {
             <Divider sx={{ borderColor: 'rgba(128,128,128,0.15)', borderWidth: 1, borderRadius: 2 }} />
           </Box>
         </Box>
-        {/* Cards de Experiência */}
         <Box sx={{ width: '100%', maxWidth: 900, mx: 'auto', my: 4, display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: 'center' }}>
           <Box sx={{ width: '100%', maxWidth: 900, my: 2 }}>
             <Experience t={t} experienceList={filteredExperiencesList} />

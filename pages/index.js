@@ -21,7 +21,6 @@ function useTranslations(language) {
 }
 
 function StickyAvatar({ name }) {
-  // Foto sticky centralizada verticalmente no desktop, estática no mobile
   return (
     <Box
       sx={{
@@ -80,7 +79,6 @@ export default function Home() {
          mt: 8,
          gap: 4,
        }}>
-         {/* Só renderiza a foto animada uma vez, centralizada no mobile */}
           <StickyAvatar name={t.header.name} />
          <Box sx={{ width: { xs: '100%', md: 'auto' }, textAlign: { xs: 'center', md: 'left' } }}>
            <Typography
