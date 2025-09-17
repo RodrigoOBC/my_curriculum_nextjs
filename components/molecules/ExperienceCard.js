@@ -5,18 +5,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import WorkIcon from '@mui/icons-material/Work';
 import Divider from '@mui/material/Divider';
-
-/**
- * Componente para exibir informações de uma experiência profissional.
- * ATENÇÃO: Nunca use dangerouslySetInnerHTML para renderizar dados vindos do banco sem sanitização! Isso pode causar XSS.
- * Props:
- * - cargo: nome do cargo
- * - startYear: ano de início
- * - endYear: ano de término
- * - empresa: nome da empresa
- * - estado: estado da empresa
- * - resumo: breve resumo do cargo
- */
 import Grid from '@mui/material/Grid';
 
 const ExperienceCard = ({ cargo, startYear, endYear, empresa, estado, resumo }) => (
@@ -39,7 +27,6 @@ const ExperienceCard = ({ cargo, startYear, endYear, empresa, estado, resumo }) 
       flexDirection: 'column',
     }}
   >
-    {/* Seção 1: Topo - Cargo */}
     <Box sx={{ display: 'flex', alignItems: 'center', p: 2, pb: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
       <WorkIcon color="primary" sx={{ fontSize: 32, mr: 1 }} />
       <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -47,9 +34,8 @@ const ExperienceCard = ({ cargo, startYear, endYear, empresa, estado, resumo }) 
       </Typography>
     </Box>
     <Divider />
-    {/* Seção 2: Grid principal */}
     <Box sx={{ display: 'flex', flexDirection: 'row', px: 2, py: 2, gap: 2, alignItems: 'center' }}>
-      {/* Coluna 1: Empresa, estado, datas */}
+
       <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, justifyContent: 'center', height: '100%' }}>
         <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>
           {empresa}

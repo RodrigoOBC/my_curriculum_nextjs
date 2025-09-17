@@ -20,7 +20,17 @@
   },
   "aboutMe": {
     "title": "About Me",
-    "description": "I am a fullstack developer passionate about technology, innovation, and continuous learning."
+    "description": [
+      "Hello, I am a Technical Lead in Testing and Software Quality, working in the field since 2019. My focus is on automation and I have strong skills in areas such as test scenarios, test execution, functional testing, and automated testing.",
+      "I am an expert in testing tools like Playwright, Cypress, and Selenium. As a professional, I am responsible for developing and implementing comprehensive test scripts that cover all functionalities and aspects of the software. I am skilled in planning and executing functional and automated tests successfully, ensuring all test scenarios are covered.",
+      "I am highly experienced in acceptance testing, which helps me ensure that all business and client requirements are met before releasing the software to the public. As a QA Tech Lead, I am highly valued for my ability to manage complex testing projects efficiently and accurately."
+    ],
+    "firstSkills":[
+      "Technical Leadership",
+      "Test Automation",
+      "Software Quality",
+      "Team Management"
+    ]
   },
   "education": {
     "title": "Education",

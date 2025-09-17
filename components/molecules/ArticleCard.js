@@ -33,20 +33,20 @@ const ArticleCard = ({ title, content, link }) => (
       flexDirection: 'column',
     }}
   >
-    {/* Título */}
+
     <Box sx={{ p: 2, pb: 1, borderTopLeftRadius: 4, borderTopRightRadius: 4 }}>
       <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
         {title}
       </Typography>
     </Box>
     <Divider />
-    {/* Conteúdo */}
+
     <CardContent>
       <Typography variant="body2" color="text.primary" paragraph>
         {content}
       </Typography>
     </CardContent>
-    {/* Botão */}
+
     <Box sx={{ p: 2, pt: 0, display: 'flex', justifyContent: 'flex-end' }}>
       <Button
         variant="contained"

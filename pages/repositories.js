@@ -59,7 +59,7 @@ export default function RepositoriesPage({ repositoriesRaw }) {
 
   if (!t) return <div>Carregando...</div>;
 
-  // Seleciona os repositórios do agregador github para o idioma
+
   const repositoriesList = Array.isArray(repositoriesRaw) && repositoriesRaw.length > 0 && repositoriesRaw[0][language]?.github
     ? repositoriesRaw[0][language].github
     : [];

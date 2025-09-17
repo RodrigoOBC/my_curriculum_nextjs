@@ -22,7 +22,6 @@ export async function getStaticProps() {
       skillsList = await mongo.findAll('Skills');
       await mongo.closeConnection();
 
-      // Validação dos dados vindos do banco
       const educationSchema = z.array(z.object({
         lang: z.string(),
         institution: z.string().optional(),
@@ -37,7 +36,7 @@ export async function getStaticProps() {
         educationList = [];
       }
     } catch (err) {
-      console.error("Failed to fetch data from MongoDB:", err); // Log do erro para depuração
+      console.error("Failed to fetch data from MongoDB:", err); 
       educationList = [];
       skillsList = [];
     }
@@ -81,15 +80,14 @@ export default function EducationPage({ educationList, skillsList }) {
    const t = useTranslations(language);
 
    if (!t) return <div>Carregando...</div>;
-   // Fallback para traduções ausentes
    if (!t.pageTitle || !t.pageTitle.education) {
      console.warn('Tradução de education não encontrada, usando fallback.');
    }
 
 
-  // Filtra a lista de formações e skills pelo idioma selecionado
+
   const filteredEducationList = Array.isArray(educationList) ? educationList.filter(edu => edu.lang === language) : [];
-  // Corrige acesso seguro ao array de skills
+
   const hadSkillsList = Array.isArray(skillsList) && skillsList.length > 0 && Array.isArray(skillsList[0]['HadSkills']) ? skillsList[0]['HadSkills'] : [];
 
   return (

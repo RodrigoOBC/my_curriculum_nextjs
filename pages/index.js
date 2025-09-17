@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { MongoOperator } from '../lib/mongodb';
 import Typography from '@mui/material/Typography';
 import Header from '../components/layout/Header';
 
@@ -21,7 +22,6 @@ function useTranslations(language) {
 }
 
 function StickyAvatar({ name }) {
-  // Foto sticky centralizada verticalmente no desktop, estática no mobile
   return (
     <Box
       sx={{
@@ -42,7 +42,32 @@ function StickyAvatar({ name }) {
   );
 }
 
-export default function Home() {
+
+
+export async function getServerSideProps() {
+  let aboutMeData = {};
+
+  try {
+    const mongoOperator = new MongoOperator(process.env.MONGODB_URI, process.env.MONGODB_DB);
+    const data = await mongoOperator.findAll('aboutme');
+    
+    if (data.length > 0) {
+      aboutMeData = data[0];
+      delete aboutMeData._id;
+    }
+  } catch (error) {
+    console.error('Failed to fetch about me data:', error);
+  }
+
+  return {
+    props: {
+      aboutMeData,
+    },
+  };
+}
+
+export default function Home({ aboutMeData }) {
+
   const [language, setLanguage] = React.useState(() => {
   if (typeof window !== 'undefined') {
     const cachedLang = window.sessionStorage.getItem('language');
@@ -64,6 +89,8 @@ export default function Home() {
 
   if (!t) return <div>Carregando...</div>;
 
+  const aboutMeContent = aboutMeData[language] || t.aboutMe;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Header
@@ -80,7 +107,6 @@ export default function Home() {
          mt: 8,
          gap: 4,
        }}>
-         {/* Só renderiza a foto animada uma vez, centralizada no mobile */}
           <StickyAvatar name={t.header.name} />
          <Box sx={{ width: { xs: '100%', md: 'auto' }, textAlign: { xs: 'center', md: 'left' } }}>
            <Typography
@@ -101,7 +127,7 @@ export default function Home() {
   {t.header.name}
 </Typography>
           {/* Renderiza apenas o AboutMe na home */}
-          <AboutMe t={t} />
+          <AboutMe aboutMe={aboutMeContent} />
         </Box>
       </Box>
     </Box>

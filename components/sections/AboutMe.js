@@ -4,7 +4,7 @@ import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 
-export default function AboutMe({ t }) {
+export default function AboutMe({ aboutMe }) {
   return (
     <Box
       sx={{
@@ -18,10 +18,10 @@ export default function AboutMe({ t }) {
     >
       
       <Typography variant="h5" sx={{ mb: 2 }}>
-        {t.aboutMe.title}
+        {aboutMe.title}
       </Typography>
-      {Array.isArray(t.aboutMe.description)
-        ? t.aboutMe.description.map((paragraph, idx) => (
+      {Array.isArray(aboutMe.description)
+        ? aboutMe.description.map((paragraph, idx) => (
             <Typography
               key={idx}
               variant="body1"
@@ -47,7 +47,7 @@ export default function AboutMe({ t }) {
                 maxWidth: 600,
               }}
             >
-              {t.aboutMe.description}
+              {aboutMe.description}
             </Typography>
           )}
       <Box
@@ -62,10 +62,16 @@ export default function AboutMe({ t }) {
           mr: 'auto',
         }}
       >
-        <Chip label="Tag 1" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 2" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 3" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
-        <Chip label="Tag 4" color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+
+        {Array.isArray(aboutMe.firstSkills)
+        ? aboutMe.firstSkills.map((skill) => (
+           
+              <Chip label={skill} color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+
+          )): null
+}
+
+
       </Box>
     </Box>
   );
