@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { MongoOperator } from '../lib/mongodb';
 import Articles from '../components/sections/Articles';
 import Typography from '@mui/material/Typography';
 import Header from '../components/layout/Header';
@@ -9,14 +8,13 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
+import { loadTranslation } from '../lib/getTranslations';
+
 export async function getStaticProps() {
-  const host = process.env.MONGODB_URI;
-  const dbName = process.env.MONGODB_DB;
-  const mongo = new MongoOperator(host, dbName);
+  const { findAll } = await import('../lib/mongodb');
   let articlesList = [];
   try {
-    articlesList = await mongo.findAll('Articles');
-    await mongo.closeConnection();
+    articlesList = await findAll('Articles');
   } catch (err) {
     console.error("Failed to fetch articles from MongoDB:", err);
     articlesList = [];
@@ -29,15 +27,7 @@ export async function getStaticProps() {
   };
 }
 
-function useTranslations(language) {
-  const [t, setT] = useState(null);
-  useEffect(() => {
-    fetch(`/locales/${language}.json`)
-      .then((res) => res.json())
-      .then(setT);
-  }, [language]);
-  return t;
-}
+
 
 export default function ArticlesPage({ articlesList }) {
 const [language, setLanguage] = useState(() => {
@@ -52,14 +42,14 @@ const [language, setLanguage] = useState(() => {
   return 'pt';
 });
 
+  const [t, setT] = useState(() => loadTranslation(language));
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem('language', language);
     }
+    setT(loadTranslation(language));
   }, [language]);
-  const t = useTranslations(language);
-
-  if (!t) return <div>Carregando...</div>;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
