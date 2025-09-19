@@ -24,13 +24,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies (clean)
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
+        run: npm ci
       # (Opcional) Validar build isoladamente para falhar mais cedo
       - name: Build
         run: npm run build
