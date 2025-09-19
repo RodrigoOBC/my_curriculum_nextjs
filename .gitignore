@@ -27,3 +27,9 @@ Thumbs.db
 
 # Optional: Ignore build artifacts
 dist/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
