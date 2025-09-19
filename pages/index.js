@@ -3,23 +3,12 @@ import dynamic from 'next/dynamic';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { MongoOperator } from '../lib/mongodb';
 import Typography from '@mui/material/Typography';
 import Header from '../components/layout/Header';
 
 const AboutMe = dynamic(() => import('../components/sections/AboutMe'));
 
-function useTranslations(language) {
-  const [t, setT] = React.useState(null);
 
-  React.useEffect(() => {
-    fetch(`/locales/${language}.json`)
-      .then((res) => res.json())
-      .then(setT);
-  }, [language]);
-
-  return t;
-}
 
 function StickyAvatar({ name }) {
   return (
@@ -44,13 +33,13 @@ function StickyAvatar({ name }) {
 
 
 
-export async function getServerSideProps() {
-  let aboutMeData = {};
+import { loadTranslation } from '../lib/getTranslations';
 
+export async function getStaticProps() {
+  const { findAll } = await import('../lib/mongodb');
+  let aboutMeData = {};
   try {
-    const mongoOperator = new MongoOperator(process.env.MONGODB_URI, process.env.MONGODB_DB);
-    const data = await mongoOperator.findAll('aboutme');
-    
+    const data = await findAll('aboutme');
     if (data.length > 0) {
       aboutMeData = data[0];
       delete aboutMeData._id;
@@ -63,6 +52,7 @@ export async function getServerSideProps() {
     props: {
       aboutMeData,
     },
+    revalidate: 60,
   };
 }
 
@@ -80,16 +70,16 @@ export default function Home({ aboutMeData }) {
   return 'pt';
 });
 
+  const [t, setT] = React.useState(() => loadTranslation(language));
+
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem('language', language);
     }
+    setT(loadTranslation(language));
   }, [language]);
-  const t = useTranslations(language);
 
-  if (!t) return <div>Carregando...</div>;
-
-  const aboutMeContent = aboutMeData[language] || t.aboutMe;
+  const aboutMeContent = aboutMeData?.[language] || t.aboutMe;
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -3,7 +3,6 @@ import { z } from 'zod';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
-import { MongoOperator } from '../lib/mongodb';
 import Experience from '../components/sections/Experience';
 import Skills from '../components/sections/HadSkills';
 import Header from '../components/layout/Header';
@@ -13,18 +12,15 @@ import { useState, useEffect } from 'react';
 
 
 
+import { loadTranslation } from '../lib/getTranslations';
+
 export async function getStaticProps() {
-  const host = process.env.MONGODB_URI;
-  const dbName = process.env.MONGODB_DB;
-  const mongo = new MongoOperator(host, dbName);
+  const { findAll } = await import('../lib/mongodb');
   let skillsList = [];
   let experiencesList = [];
   try {
-    skillsList = await mongo.findAll('Skills');
-    experiencesList = await mongo.findAll('Experiencia');
-    await mongo.closeConnection();
-
-
+    skillsList = await findAll('Skills');
+    experiencesList = await findAll('Experiencia');
     const skillSchema = z.array(z.object({ Softskills: z.array(z.string()) }));
     const experienceSchema = z.array(z.object({
       position: z.string(),
@@ -59,15 +55,7 @@ export async function getStaticProps() {
   };
 }
 
-function useTranslations(language) {
-  const [t, setT] = useState(null);
-  useEffect(() => {
-    fetch(`/locales/${language}.json`)
-      .then((res) => res.json())
-      .then(setT);
-  }, [language]);
-  return t;
-}
+
 
 
 
@@ -84,19 +72,23 @@ const [language, setLanguage] = useState(() => {
      return 'pt';
    });
 
+   const [t, setT] = useState(() => loadTranslation(language));
+
    useEffect(() => {
      if (typeof window !== 'undefined') {
        window.sessionStorage.setItem('language', language);
      }
+     setT(loadTranslation(language));
    }, [language]);
-  const t = useTranslations(language);
 
-  if (!t) return <div>Carregando...</div>;
-
-
-  const languageExperiences = language === 'pt' ? 'pt/Br' : 'en/Us';
-  const filteredExperiencesList = experiencesList.filter(exp => exp.lang === languageExperiences);
-  const softSkillsList = skillsList[0]['Softskills']
+  const variantMap = { pt: ['pt','pt/Br'], en: ['en','en/Us'] };
+  const languageExperiences = variantMap[language];
+  const filteredExperiencesList = Array.isArray(experiencesList)
+    ? experiencesList.filter(exp => languageExperiences.includes(exp.lang))
+    : [];
+  const softSkillsList = Array.isArray(skillsList) && skillsList.length > 0 && Array.isArray(skillsList[0]?.Softskills)
+    ? skillsList[0].Softskills
+    : []
 
   return (
     <Box sx={{ flexGrow: 1 }}>

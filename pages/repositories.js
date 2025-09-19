@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { MongoOperator } from '../lib/mongodb';
 import Repositories from '../components/sections/Repositories';
 import Header from '../components/layout/Header';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { loadTranslation } from '../lib/getTranslations';
+
 export async function getStaticProps() {
-  const host = process.env.MONGODB_URI;
-  const dbName = process.env.MONGODB_DB;
-  const mongo = new MongoOperator(host, dbName);
+  const { findAll } = await import('../lib/mongodb');
   let repositoriesRaw = [];
   try {
-    repositoriesRaw = await mongo.findAll('Repositories');
-    await mongo.closeConnection();
+    repositoriesRaw = await findAll('Repositories');
   } catch (err) {
     console.error("Failed to fetch repositories from MongoDB:", err);
     repositoriesRaw = [];
@@ -27,15 +25,7 @@ export async function getStaticProps() {
   };
 }
 
-function useTranslations(language) {
-  const [t, setT] = useState(null);
-  useEffect(() => {
-    fetch(`/locales/${language}.json`)
-      .then((res) => res.json())
-      .then(setT);
-  }, [language]);
-  return t;
-}
+
 
 export default function RepositoriesPage({ repositoriesRaw }) {
   const [language, setLanguage] = useState(() => {
@@ -50,17 +40,16 @@ export default function RepositoriesPage({ repositoriesRaw }) {
     return 'pt';
   });
 
+  const [t, setT] = useState(() => loadTranslation(language));
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem('language', language);
     }
+    setT(loadTranslation(language));
   }, [language]);
-  const t = useTranslations(language);
 
-  if (!t) return <div>Carregando...</div>;
-
-
-  const repositoriesList = Array.isArray(repositoriesRaw) && repositoriesRaw.length > 0 && repositoriesRaw[0][language]?.github
+  const repositoriesList = Array.isArray(repositoriesRaw) && repositoriesRaw.length > 0 && repositoriesRaw[0]?.[language]?.github
     ? repositoriesRaw[0][language].github
     : [];
 

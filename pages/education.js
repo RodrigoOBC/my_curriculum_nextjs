@@ -3,7 +3,6 @@ import { z } from 'zod';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
-import { MongoOperator } from '../lib/mongodb';
 import Education from '../components/sections/Education';
 import Skills from '../components/sections/Skills';
 import Header from '../components/layout/Header';
@@ -11,35 +10,33 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { useState, useEffect } from 'react';
 
-export async function getStaticProps() {
-  const host = process.env.MONGODB_URI ;
-  const dbName = process.env.MONGODB_DB ;
-  const mongo = new MongoOperator(host, dbName);
-   let educationList = [];
-   let skillsList = [];
-    try {
-      educationList = await mongo.findAll('Education');
-      skillsList = await mongo.findAll('Skills');
-      await mongo.closeConnection();
+import { loadTranslation } from '../lib/getTranslations';
 
-      const educationSchema = z.array(z.object({
-        lang: z.string(),
-        institution: z.string().optional(),
-        degree: z.string().optional(),
-        startDate: z.string().optional(),
-        endDate: z.string().optional(),
-        descriptions: z.union([z.string(), z.array(z.string())]).optional()
-      }));
-      const educationParse = educationSchema.safeParse(educationList);
-      if (!educationParse.success) {
-        console.error('Education data validation failed:', educationParse.error);
-        educationList = [];
-      }
-    } catch (err) {
-      console.error("Failed to fetch data from MongoDB:", err); 
+export async function getStaticProps() {
+  const { findAll } = await import('../lib/mongodb');
+  let educationList = [];
+  let skillsList = [];
+  try {
+    educationList = await findAll('Education');
+    skillsList = await findAll('Skills');
+    const educationSchema = z.array(z.object({
+      lang: z.string(),
+      institution: z.string().optional(),
+      degree: z.string().optional(),
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+      descriptions: z.union([z.string(), z.array(z.string())]).optional()
+    }));
+    const educationParse = educationSchema.safeParse(educationList);
+    if (!educationParse.success) {
+      console.error('Education data validation failed:', educationParse.error);
       educationList = [];
-      skillsList = [];
     }
+  } catch (err) {
+    console.error("Failed to fetch data from MongoDB:", err);
+    educationList = [];
+    skillsList = [];
+  }
    return {
      props: {
        educationList: JSON.parse(JSON.stringify(educationList)),
@@ -49,15 +46,7 @@ export async function getStaticProps() {
    };
  }
 
-function useTranslations(language) {
-  const [t, setT] = useState(null);
-  useEffect(() => {
-    fetch(`/locales/${language}.json`)
-      .then((res) => res.json())
-      .then(setT);
-  }, [language]);
-  return t;
-}
+
 
 export default function EducationPage({ educationList, skillsList }) {
   const [language, setLanguage] = useState(() => {
@@ -72,23 +61,24 @@ export default function EducationPage({ educationList, skillsList }) {
     return 'pt';
   });
 
+  const [t, setT] = useState(() => loadTranslation(language));
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.sessionStorage.setItem('language', language);
     }
+    setT(loadTranslation(language));
   }, [language]);
-   const t = useTranslations(language);
 
-   if (!t) return <div>Carregando...</div>;
-   if (!t.pageTitle || !t.pageTitle.education) {
-     console.warn('Tradução de education não encontrada, usando fallback.');
-   }
-
-
+  if (!t.pageTitle || !t.pageTitle.education) {
+    console.warn('Tradução de education não encontrada, usando fallback.');
+  }
 
   const filteredEducationList = Array.isArray(educationList) ? educationList.filter(edu => edu.lang === language) : [];
 
-  const hadSkillsList = Array.isArray(skillsList) && skillsList.length > 0 && Array.isArray(skillsList[0]['HadSkills']) ? skillsList[0]['HadSkills'] : [];
+  const hadSkillsList = Array.isArray(skillsList) && skillsList.length > 0 && Array.isArray(skillsList[0]?.HadSkills)
+    ? skillsList[0].HadSkills
+    : [];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
