@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-const headerOptions = [{ name: 'Sobre Mim', link: '/' }, { name: 'Formação', link: '/education' }, { name: 'Experiência', link: '/experiences' }, { name: 'Repositórios', link: '/repositories' }, { name: 'Artigos', link: '/articles' }]
+const headerOptions = [{ name: 'Sobre Mim', link: '/' }, 
+  { name: 'Formação', link: '/education', title: 'Formação e Skills' },
+   { name: 'Experiência', link: '/experiences', title: 'Experiência'  }, 
+   { name: 'Repositórios', link: '/repositories', title: 'Repositórios'  }, 
+   { name: 'Artigos', link: '/articles', title: 'Artigos'  }]
 
 
 for (let headerOption of headerOptions) {
@@ -22,4 +26,18 @@ for (let headerOption of headerOptions) {
     await expect(page).toHaveURL(`${headerOption.link}`);
 
   })
+
+  test(`validate load page ${headerOption.name}`, async ({ page }) => {
+    await page.goto('/');
+    const headerLink = page.getByRole('link', { name: headerOption.name })
+    await headerLink.click()
+    if (headerOption.name === 'Sobre Mim') {
+      const titleName = page.getByRole('heading', { name: "Rodrigo Cabral" }).nth(1);
+      await expect(titleName).toBeVisible();
+    }else{
+      const titleName = page.getByRole('heading', { name: headerOption.name });
+      await expect(titleName).toBeVisible();
+    }
+  })
+
 }
