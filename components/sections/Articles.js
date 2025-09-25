@@ -11,18 +11,18 @@ export default function Articles({ t, articlesList = [] }) {
       {articlesList.length === 0 ? (
         <Typography variant="body2" color="text.secondary">Nenhum artigo encontrado.</Typography>
       ) : (
-        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Grid container spacing={3} maxWidth={900} justifyContent="center">
-            {articlesList.map((article, idx) => (
-              <Grid item xs={12} md={6} key={idx}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '100%', maxWidth: 900 }}>
+            {articlesList.map((article) => (
+              <Box key={article.id || article.link || article.title} sx={{ width: '100%' }}>
                 <ArticleCard
                   title={article.title}
                   content={article.content}
                   link={article.link}
                 />
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Box>
       )}
     </Box>

@@ -65,8 +65,8 @@ export default function AboutMe({ aboutMe }) {
 
         {Array.isArray(aboutMe.firstSkills)
         ? aboutMe.firstSkills.map((skill) => (
-           
-              <Chip label={skill} color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
+            
+              <Chip key={skill} label={skill} color="primary" variant="outlined" sx={{ fontSize: 16, px: 2, height: 40 }} />
 
           )): null
 }

@@ -51,6 +51,7 @@ const [language, setLanguage] = useState(() => {
     setT(loadTranslation(language));
   }, [language]);
 
+  const filteredarticlesList = Array.isArray(articlesList) ? articlesList.filter(article => article.lang === language) : [];
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Header
@@ -92,7 +93,7 @@ const [language, setLanguage] = useState(() => {
             <Box sx={{ width: '100%', maxWidth: 900, my: 2 }}>
           <Divider sx={{ borderColor: 'rgba(128,128,128,0.15)', borderWidth: 1, borderRadius: 2 }} />
         </Box>
-           <Articles t={t} articlesList={articlesList} />
+           <Articles t={t} articlesList={filteredarticlesList} />
            <Divider sx={{ borderColor: 'rgba(128,128,128,0.15)', borderWidth: 1, borderRadius: 2, my: 4 }} />
          </Box>
       </Box>

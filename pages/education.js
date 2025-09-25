@@ -128,7 +128,7 @@ export default function EducationPage({ educationList, skillsList }) {
         <Box sx={{ width: '100%', maxWidth: 900, my: 2 }}>
           <Divider sx={{ borderColor: 'rgba(128,128,128,0.15)', borderWidth: 1, borderRadius: 2 }} />
         </Box>
-         <Skills t={t} skillsList={hadSkillsList || []} />
+         <Skills t={t} skillsList={hadSkillsList || []} name={'Hard Skills'} />
       </Box>
     </Box>
   );

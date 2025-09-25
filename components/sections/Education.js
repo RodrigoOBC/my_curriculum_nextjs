@@ -14,8 +14,8 @@ export default function Education({ t, educationList = [] }) {
        ) : (
          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
            <Grid container spacing={3} maxWidth={900} justifyContent="center">
-             {educationList.map((edu, idx) => (
-               <Grid item xs={12} md={6} key={idx}>
+              {educationList.map((edu) => (
+               <Grid key={edu.id || edu.institution} size={{ xs: 12, md: 6 }}>
                  <EducationCard
                    course={edu.course}
                    startYear={edu.startDate}
