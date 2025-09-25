@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
 import Experience from '../components/sections/Experience';
-import Skills from '../components/sections/HadSkills';
+import Skills from '../components/sections/Skills';
 import Header from '../components/layout/Header';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -90,6 +90,8 @@ const [language, setLanguage] = useState(() => {
     ? skillsList[0].Softskills
     : []
 
+  const skillTransform = softSkillsList.map(skill => {return {'skill': skill}});
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Header
@@ -142,7 +144,7 @@ const [language, setLanguage] = useState(() => {
 
 
         </Box>
-        <Skills t={t} skillsList={softSkillsList} />
+        <Skills t={t} skillsList={skillTransform} name={'Soft Skills'} />
       </Box>
     </Box>
   );

@@ -58,25 +58,28 @@ export async function getStaticProps() {
 
 export default function Home({ aboutMeData }) {
 
-  const [language, setLanguage] = React.useState(() => {
-  if (typeof window !== 'undefined') {
-    const cachedLang = window.sessionStorage.getItem('language');
-    if (cachedLang && ['pt', 'en'].includes(cachedLang)) {
-      return cachedLang;
-    }
-    const browserLang = navigator.language.slice(0, 2);
-    return ['pt', 'en'].includes(browserLang) ? browserLang : 'pt';
-  }
-  return 'pt';
-});
-
-  const [t, setT] = React.useState(() => loadTranslation(language));
+  const [language, setLanguage] = React.useState('pt');
+  const [hydrated, setHydrated] = React.useState(false);
+  const [t, setT] = React.useState(() => loadTranslation('pt'));
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem('language', language);
-    }
+    setHydrated(true);
+    try {
+      const cached = window.sessionStorage.getItem('language');
+      if (cached && ['pt','en'].includes(cached)) {
+        setLanguage(cached);
+        return;
+      }
+      const browserLang = navigator.language.slice(0,2);
+      if (['pt','en'].includes(browserLang)) {
+        setLanguage(browserLang);
+      }
+    } catch {}
+  }, []);
+
+  React.useEffect(() => {
     setT(loadTranslation(language));
+    try { window.sessionStorage.setItem('language', language); } catch {}
   }, [language]);
 
   const aboutMeContent = aboutMeData?.[language] || t.aboutMe;
