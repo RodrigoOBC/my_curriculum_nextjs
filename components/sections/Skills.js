@@ -9,7 +9,7 @@ import BuildIcon from '@mui/icons-material/Build';
 import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/Download';
 
-export default function Skills({ t, skillsList = [] }) {
+export default function Skills({ t, skillsList = [], name = '' }) {
   return (
     <Box width="100%" sx={{ mt: 6, px: 2, display: 'flex', justifyContent: 'center' }}>
       <Card sx={{ width: '100%', maxWidth: 900, borderRadius: 4, boxShadow: 6, backgroundColor: '#fff', mx: 'auto' }}>
@@ -29,7 +29,7 @@ export default function Skills({ t, skillsList = [] }) {
         fontSize: { xs: 28, sm: 36 },
       }}
     >
-      SoftSkills
+      {name}
     </Typography>
   </Box>
 </Box>
@@ -37,9 +37,9 @@ export default function Skills({ t, skillsList = [] }) {
             <Typography variant="body2" color="text.secondary">Nenhuma skill encontrada.</Typography>
           ) : (
             <Grid container spacing={3} justifyContent="center">
-              {skillsList.map((skill, idx) => (
-                <Grid item xs={12} sm={4} md={4} key={idx} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Chip label={skill.skill} color="primary" variant="outlined" sx={{ fontSize: 18, px: 2, py: 2, height: 48, transition: 'all 0.2s', cursor: 'pointer', '&:hover': { boxShadow: 4, transform: 'scale(1.08)', background: 'linear-gradient(90deg, #1976d2 0%, #000 100%)', color: '#fff', border: 'none' } }} />
+              {skillsList.map((skill) => (
+                <Grid key={skill.id || skill.skill} size={{ xs: 12, sm: 4, md: 4 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Chip key={skill.id || skill.skill} label={skill.skill}  color="primary" variant="outlined" sx={{ fontSize: 18, px: 2, py: 2, height: 48, transition: 'all 0.2s', cursor: 'pointer', '&:hover': { boxShadow: 4, transform: 'scale(1.08)', background: 'linear-gradient(90deg, #1976d2 0%, #000 100%)', color: '#fff', border: 'none' } }} />
                 </Grid>
               ))}
             </Grid>

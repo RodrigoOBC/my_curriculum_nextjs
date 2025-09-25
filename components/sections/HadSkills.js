@@ -38,7 +38,7 @@ export default function Skills({ t, skillsList = [] }) {
           ) : (
             <Grid container spacing={3} justifyContent="center">
               {skillsList.map((skill, idx) => (
-                <Grid item xs={12} sm={4} md={4} key={idx} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid key={idx} sx={{ display: 'flex', justifyContent: 'center' }}>
                   <Chip label={skill} color="primary" variant="outlined" sx={{ fontSize: 18, px: 2, py: 2, height: 48, transition: 'all 0.2s', cursor: 'pointer', '&:hover': { boxShadow: 4, transform: 'scale(1.08)', background: 'linear-gradient(90deg, #1976d2 0%, #000 100%)', color: '#fff', border: 'none' } }} />
                 </Grid>
               ))}

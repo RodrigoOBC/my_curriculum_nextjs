@@ -13,20 +13,20 @@ export default function Experience({ t, experienceList = [] }) {
          <Typography variant="body2" color="text.secondary">Nenhuma formação encontrada.</Typography>
        ) : (
          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-           <Grid container spacing={3} maxWidth={900} justifyContent="center">
-             {experienceList.map((edu, idx) => (
-               <Grid item xs={12} md={6} key={idx}>
+           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 3, maxWidth: 900 }}>
+              {experienceList.map((exp) => (
+               <Box key={exp.id || exp.company} sx={{ width: '100%' }}>
                  <ExperienceCard
-                   cargo={edu.position}
-                   startYear={edu.startDate}
-                   endYear={edu.endDate}
-                   empresa={edu.company}
-                   estado={edu.state}
-                   resumo={edu.descriptions}
+                   cargo={exp.position}
+                   startYear={exp.startDate}
+                   endYear={exp.endDate}
+                   empresa={exp.company}
+                   estado={exp.state}
+                   resumo={exp.descriptions}
                  />
-               </Grid>
+               </Box>
              ))}
-           </Grid>
+            </Box>
          </Box>
        )}
     </Box>
