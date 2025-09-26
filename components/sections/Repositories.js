@@ -15,7 +15,7 @@ export default function Repositories({ t, repositoriesList = [], aggregator = 'g
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <Grid container spacing={2} maxWidth={1200} sx={{ mx: 'auto' }} columns={12}>
             {repositoriesList.map((repo) => (
-              <Grid key={repo.id || repo.link || repo.title} size={{ xs: 12, sm: 6, md: 4 }}>
+              <Grid key={repo.id || repo.link || repo.title} columnSpan={6}>
 <RepositoryCard
                    name={repo.title}
                    description={repo.description}

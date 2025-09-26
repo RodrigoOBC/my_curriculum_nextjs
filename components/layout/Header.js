@@ -11,6 +11,15 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
 import Tooltip from '@mui/material/Tooltip';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const socialLinks = [
   { icon: <LinkedInIcon />, url: 'https://www.linkedin.com/in/rodrigo-cabral-0280b3121/', label: 'LinkedIn' },
@@ -72,32 +81,99 @@ function LanguageMenu({ language, setLanguage }) {
 
 
 export default function Header({ t, language, setLanguage, onNavigate }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  const navLinks = [
+    { label: t.header.about, href: '/' },
+    { label: t.header.education, href: '/education' },
+    { label: t.header.experience, href: '/experiences' },
+    { label: t.header.articles, href: '/articles' },
+    { label: t.header.repositories, href: '/repositories' },
+  ];
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           {t.header.name}
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button color="inherit" component={Link} href="/">{t.header.about}</Button>
-          <Button color="inherit" component={Link} href="/education">{t.header.education}</Button>
-          <Button color="inherit" component={Link} href="/experiences">{t.header.experience}</Button>
-          <Button color="inherit" component={Link} href="/articles">{t.header.articles}</Button>
-          <Button color="inherit" component={Link} href="/repositories">{t.header.repositories}</Button>
-        </Box>
-        <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
-{socialLinks.map((link) => (
-             <Tooltip title={link.label} arrow key={link.label}>
-               <IconButton color="inherit" href={link.url} target="_blank" rel="noopener" aria-label={link.label}>
-                 {link.icon}
-               </IconButton>
-             </Tooltip>
-           ))}
-        </Box>
-        {/* Menu de seleção de idioma */}
-        <LanguageMenu language={language} setLanguage={setLanguage} />
+        {isMobile ? (
+          <>
+            <IconButton
+              color="inherit"
+              edge="start"
+              aria-label="menu"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor="right"
+              open={drawerOpen}
+              onClose={handleDrawerToggle}
+            >
+              <Box
+                sx={{ width: 250, bgcolor: '#fff', height: '100%', minHeight: '100vh', color: '#111' }}
+                role="presentation"
+                onClick={handleDrawerToggle}
+                onKeyDown={handleDrawerToggle}
+              >
+                <List>
+                  {navLinks.map((item) => (
+                    <ListItem key={item.label} disablePadding>
+                      <ListItemButton component={Link} href={item.href} sx={{ color: '#111' }}>
+                        <ListItemText primary={item.label} sx={{ color: '#111' }} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+                <Divider />
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, my: 2 }}>
+                  {socialLinks.map((link) => (
+                    <Tooltip title={link.label} arrow key={link.label}>
+                      <IconButton color="inherit" href={link.url} target="_blank" rel="noopener" aria-label={link.label}>
+                        {link.icon}
+                      </IconButton>
+                    </Tooltip>
+                  ))}
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <LanguageMenu language={language} setLanguage={setLanguage} />
+                </Box>
+              </Box>
+            </Drawer>
+          </>
+        ) : (
+          <>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              {navLinks.map((item) => (
+                <Button color="inherit" component={Link} href={item.href} key={item.label}>
+                  {item.label}
+                </Button>
+              ))}
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+              {socialLinks.map((link) => (
+                <Tooltip title={link.label} arrow key={link.label}>
+                  <IconButton color="inherit" href={link.url} target="_blank" rel="noopener" aria-label={link.label}>
+                    {link.icon}
+                  </IconButton>
+                </Tooltip>
+              ))}
+            </Box>
+            <LanguageMenu language={language} setLanguage={setLanguage} />
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
 }
+
 
