@@ -19,6 +19,9 @@
 4. **[2026-03-30] Visual QA should cover desktop and mobile**
    Do instead: capture full-page screenshots at desktop and narrow widths, then check for cramped columns and overflow with Playwright.
 
+5. **[2026-04-09] shadcn Vite init needs Tailwind v4 and `@` alias up front**
+   Do instead: install `tailwindcss` + `@tailwindcss/vite`, add `@import "tailwindcss";`, and define `@/*` before rerunning `shadcn init`.
+
 ## Shell & Command Reliability
 1. **[2026-03-30] Use pnpm for this repository**
    Do instead: run installs, tests, and builds with `pnpm` and keep `pnpm-lock.yaml` as the source of truth.
@@ -51,3 +54,6 @@
 
 3. **[2026-03-30] Follow TDD**
    Do instead: create tests first, confirm they fail, implement, and verify they pass.
+
+4. **[2026-04-09] One reusable component per file**
+   Do instead: extract each shared or section component into its own `.jsx` file and keep landing pages as orchestrators only.
