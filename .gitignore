@@ -27,3 +27,5 @@ Thumbs.db
 
 # Optional: Ignore build artifacts
 dist/
+
+.opencode/skills
